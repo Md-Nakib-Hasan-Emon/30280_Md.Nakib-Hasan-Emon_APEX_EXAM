@@ -1,0 +1,5 @@
+8 A).
+
+At first a external credential is needed.then with that a named credentail i created
+this named credentail hold the api information and apikey which is used 
+to call that http request

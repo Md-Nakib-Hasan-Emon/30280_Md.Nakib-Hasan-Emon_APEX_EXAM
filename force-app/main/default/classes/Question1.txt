@@ -1,0 +1,42 @@
+1.a)
+
+public with sharing class Question1 {
+    public retrieveAccount() {
+        List<Account> retacc= [
+            SELECT Id, Name,(SELECT Id, Name, Email,Phone FROM Contact),
+            (SELECT Id, Name, StageName, Amount,CloseDate FROM Oppotunities )
+            FROM Account
+            WHERE Id = :accountId
+        ];
+        For(Account acc:retacc){
+            System.debug(acc);
+        }
+
+    }
+}
+
+
+b). public with sharing class Question1 {
+    public retrieveAccount() {
+        List<Account> retacc= [
+            Find {'ABC'} Returning Account,Contact;
+        ];
+        For(Account acc:retacc){
+            System.debug(acc);
+        }
+
+    }
+}
+ here sosl query is used which find value using keyword in different objects.
+
+
+c).
+
+to ensure  record-level access and appropriate object/field
+access are respected when the method executes it should use permision set for object and field access.by giving permission to appropriate permission.
+for record level access from the user level can be given.
+
+
+d)IF the service may receive a list of multiple Account Ids instead of a single Account Id in the future.
+the method work completely fine and list is used so it will work.
+ 

@@ -1,0 +1,19 @@
+5.a)
+
+the current weakness in error handing is 
+
+
+
+
+b.)
+
+
+
+D).try {
+insert leadsToInsert;
+} catch (Exception e) {
+System.debug('Error');
+}
+
+
+from this code the eror will DMLException cause it failed DML operation

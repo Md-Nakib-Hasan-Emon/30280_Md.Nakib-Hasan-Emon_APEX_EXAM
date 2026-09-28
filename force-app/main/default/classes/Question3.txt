@@ -1,0 +1,55 @@
+3.A)
+
+Validation rules:
+
+formula that prevents an Opportunity from being saved as Closed Won when
+Amount is blank or not greater than zero.
+
+
+AND(
+    ISBLANK(Amount),
+    Amount<0;
+)
+
+
+
+B).the sequece would be
+
+Validation rules
+|
+before-save automation, 
+|
+before trigger, 
+|
+after trigger, 
+|
+later record automation
+
+
+when input or updateing data validation rules works first ...it checks and stop at 
+that time if u valid .similarly other works sequence bu sequence
+
+
+
+c.)
+
+Apex trigger may execute more than once during what the user considers a single save
+operation, and describe the possible impact on the audit-record creation logic
+
+
+the reason could be not using proper condition.before update and after update both has different duty.
+if not use conditionproperly it could effect each other
+
+
+d.)trigger OpportunityTrigger on Opportunity (before update, after update) {
+
+   List<Opportunity> new=Trigger.new;
+      List<Opportunity> new=Trigger.old;
+
+   if(trigger.isbefore)
+{
+    
+}
+
+       
+}

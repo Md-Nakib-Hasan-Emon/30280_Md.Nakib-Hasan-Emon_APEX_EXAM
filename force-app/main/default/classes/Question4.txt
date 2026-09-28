@@ -1,0 +1,28 @@
+4.a)
+object/field-level access in the context of this
+scenario is give using permission sets which determines who can the the object
+where 
+record-level access is given using permission  from user profiles who can see the specific record
+
+
+b).
+
+We can use With sharing/without sharing to give access to appraprite user.also 
+is soql we can use With User MODE.
+
+
+c.)
+CRUD and field-level security should be enforced when querying or updating the fields used
+by this service. Include appropriate modern Apex security mechanisms where relevant
+
+we should use appropriate method to insure secuirity
+
+
+d).
+
+if he class currently executes its query and DML operations without considering the running user’s
+access
+
+
+it could update or delete valueable information which can cause harm to the organization.
+the secuirty and privacy could be hampered.

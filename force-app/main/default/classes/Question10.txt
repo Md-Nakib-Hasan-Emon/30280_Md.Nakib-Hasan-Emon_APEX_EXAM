@@ -1,0 +1,17 @@
+10.a)
+should use batch apex
+
+
+
+
+b.)
+
+
+by using Duplicate sets or fomulas  would prevent duplicate Vulnerability__c and Software_Product_Vulnerability__c records
+while processing large amounts of data. 
+
+
+c).by using async apex batch apex
+
+
+d.)

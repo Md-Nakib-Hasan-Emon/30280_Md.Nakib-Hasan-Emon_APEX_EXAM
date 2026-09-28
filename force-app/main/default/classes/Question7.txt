@@ -1,0 +1,27 @@
+7.a)
+
+@isTest
+private class testclass {
+
+    @isTest
+    static void myUnitTest() {
+       
+    }
+}
+
+
+
+d.)
+ Test.startTest() T
+
+ //dml operation(insert,update  delete etc)
+ Test.stopTest() 
+
+
+
+ e.)
+
+ apex test class meaningful and reliable for
+production deployment because it checks every functionality of a code
+finds  if there is any error or exception
+helps developer to identify problem before production

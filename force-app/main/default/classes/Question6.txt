@@ -1,0 +1,88 @@
+6.a)
+
+
+public with sharing class accountprocess implements Database.Batchable<SObject>, Database.RaisesPlatformEvents {
+
+    public Database.QueryLocator start(Database.BatchableContext context) {
+        // TODO: add a WHERE clause to filter records
+        return Database.getQueryLocator([SELECT Id,Name,Customer_Tier__c,AnnualRevenue FROM Account Where ='Active']);
+    }
+
+    public void execute(Database.BatchableContext context, List<Account> accpro ) {
+        for(Account item:accpro){
+            if(item.AnnualRevenue>=10000000){
+                item.Customer_Tier__c=' Enterprise'
+
+            }else if(item.AnnualRevenue<=10000000 && item.AnnualRevenue< 10,000,000){
+                item.Customer_Tier__c=' Medium'
+
+            }else{
+                item.Customer_Tier__c=' Small'
+            }
+        }
+
+        update item;
+
+    }
+
+    public void finish(Database.BatchableContext context) {
+        System.debug('success');
+
+    }
+}
+
+
+Database.executeBatch(new accountprocess(),200);
+
+In Batch Apex 
+start method-> fetch Data
+execute method-> handle logic
+finish methods-> simply used for messeage or email notification
+
+
+b).
+
+
+public with sharing class accountprocess implements Database.Batchable<SObject>, Database.RaisesPlatformEvents {
+
+    public Database.QueryLocator start(Database.BatchableContext context) {
+        // TODO: add a WHERE clause to filter records
+        return Database.getQueryLocator([SELECT Id,Name,Customer_Tier__c,AnnualRevenue FROM Account Where ='Active']);
+    }
+
+    public void execute(Database.BatchableContext context, List<Account> accpro ) {
+        for(Account item:accpro){
+            if(item.AnnualRevenue>=10000000){
+                item.Customer_Tier__c=' Enterprise'
+
+            }else if(item.AnnualRevenue<=10000000 && item.AnnualRevenue< 10,000,000){
+                item.Customer_Tier__c=' Medium'
+
+            }else{
+                item.Customer_Tier__c=' Small'
+            }
+        }
+
+        update item;
+
+    }
+
+    public void finish(Database.BatchableContext context) {
+        System.debug('success');
+
+    }
+}
+
+
+Database.executeBatch(new accountprocess(),200);
+
+
+C).
+Salesforce in multitenant system so it has govonor limit
+
+in Batch apex the dml task is separated in chunks so it can stay inside govonor limits and increase the transaction size and speed up the processing
+
+
+
+d).batch execution works even if some transaction fails...it does not rollback and store succesfull value...it also 
+stores record about successful and failed transaction

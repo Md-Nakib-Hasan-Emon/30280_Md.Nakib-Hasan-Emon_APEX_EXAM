@@ -1,0 +1,107 @@
+a) Identify at least four technical problems or risks in the implementation:
+
+
+1. we are taking Account input using this query 
+Account acc = [
+SELECT Id, Strategic__c
+FROM Account
+WHERE Id = :opp.AccountId
+];
+which is taking only one input at a time.a list should be used instead
+List<Account> acc = [
+SELECT Id, Strategic__c
+FROM Account
+WHERE Id = :opp.AccountId
+];
+
+
+2.not using Bulkification
+3. not using for loop for appropriately
+4.using set to pick unique account and oppertunities date
+
+
+
+
+b.)
+
+these problems can affect Salesforce governor limits, data processing, or transaction
+behavior during bulk operations.
+
+Bulkification is not used here which can affect governor limits.Account data is stored one at a time which can cause
+update one Opportunity at a time, but errors occur during data imports involving
+hundreds of Opportunities.Set would be appropriate for data processing and transaction as it holds unique value.
+
+
+c.)
+  solved code:
+
+trigger OpportunityTrigger on Opportunity (after insert, after update) {
+
+    List<Opportunity> opp : Trigger.new
+
+        List<Account> acc = [
+                SELECT Id, Strategic__c
+                FROM Account
+                WHERE Id = :opp.AccountId
+                ];
+        List<Opportunity> opportunities = [
+        SELECT Id, Amount
+        FROM Opportunity
+        WHERE AccountId = :opp.AccountId
+        ];
+        Decimal totalAmount = 0;
+        for (Opportunity item : opportunities) {
+            if (item.Amount != null) {
+            totalAmount += item.Amount;
+            }
+        }
+        if (totalAmount >= 5000000) {
+            acc.Strategic__c = true;
+            update acc;
+        }
+}
+
+
+d.) i would use trigger handler class to organize the trigger and supporting Apex classes so that business logic is not
+unnecessarily kept inside the trigger itself
+
+
+trigger OpportunityTrigger on Opportunity (after insert, after update) {
+
+   OpportunityTriggerMethod(Trigger.new);
+
+       
+}
+
+
+public global with sharing class OpportunityTriggerHandler {
+    public static void OpportunityTriggerMethod( List<Account> acc)
+
+    {
+ List<Account> acc = [
+                SELECT Id, Strategic__c
+                FROM Account
+                WHERE Id = :opp.AccountId
+                ];
+        List<Opportunity> opportunities = [
+        SELECT Id, Amount
+        FROM Opportunity
+        WHERE AccountId = :opp.AccountId
+        ];
+        Decimal totalAmount = 0;
+        for (Opportunity item : opportunities) {
+            if (item.Amount != null) {
+            totalAmount += item.Amount;
+            }
+        }
+        if (totalAmount >= 5000000) {
+            acc.Strategic__c = true;
+            update acc;
+        }
+    }
+}
+
+
+
+
+
